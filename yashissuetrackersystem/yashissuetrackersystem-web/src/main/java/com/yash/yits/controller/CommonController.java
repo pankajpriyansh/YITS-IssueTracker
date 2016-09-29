@@ -6,19 +6,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CommonController {
 
+	@RequestMapping(value="/welcomeView")
+	public String welcomePage(){
+		return "Welcome";
+	}
+	
+	
 	@RequestMapping(value="/userWelcome")
 	public String userDashboard(){
-		
-		System.out.println("in common");
-		return "UserDashboard";
-
-		
-		
-		
+		return "redirect:/static/UserDashboard.html";
 	}
 	
 	@RequestMapping(value="/managerWelcome")
 	public String managerDashboard(){
-		return "ManagerDashboard";
+		return "redirect:/static/ManagerDashboard.html";
 	}
 }

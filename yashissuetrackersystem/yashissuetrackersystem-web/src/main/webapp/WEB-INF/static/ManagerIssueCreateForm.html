@@ -1,0 +1,217 @@
+<!-- Script for jQuery -->
+<script src="../scripts/attachment.js"></script>
+ 
+<!-- ng-controller="userController as uc" -->
+<style>
+.container{
+	
+	width:70%;
+}
+</style>
+
+<div class="container">
+<h3 class="headerlabel">Create Issue</h3><br>
+  <form role="form" ng-submit="mc.add()">
+<div class="box1">
+	
+	
+<div class="form-group col-sm-4">
+	
+	<label for="issueProject">Project Name</label>
+	<select ng-model="mc.createIssue.project.id" class="dropDown form-control" ng-change="myFunc()" id="selectId">
+	<option ng-repeat="project in projects" value="{{project.id}}" >{{project.name}}</option>
+	</select>
+  </div>
+  
+  <div class="form-group col-sm-4">
+
+	<label for="issueType">IssueType</label>
+	<select ng-model="mc.createIssue.issueType.id" class="dropDown form-control">
+	<option ng-repeat="issueType in issueTypeList" value="{{issueType.id}}" >{{issueType.type}}</option>
+	</select>
+  </div>
+  
+  <div class="form-group col-sm-4">
+<label for="issuePriority">IssuePriority</label>
+<select ng-model="mc.createIssue.issuePriority.id" class="dropDown form-control">
+<option ng-repeat="priority in priorities" value="{{priority.id}}">{{priority.type}}</option>
+</select>
+  </div>
+  
+  
+  
+  
+
+</div>
+
+
+ <div class="box2">
+  <div class="form-group col-sm-4">
+<label for="component">Issue Component</label>
+<input type="text" ng-model="mc.createIssue.component" class="form-control" />
+ </div>
+ <div class="form-group col-sm-4">
+<label for="affectedVersion">Issue Affective Version</label>
+<input type="text" ng-model="mc.createIssue.affectedVersion" class="form-control" />
+ </div>
+ <div class="form-group col-sm-4">
+ <label for="applicationEnvironment">ApplicationEnvironment</label>
+<select ng-model="mc.createIssue.applicationEnvironment.id" class="dropDown form-control">
+<option ng-repeat="environment in environments" value="{{environment.id}}">{{environment.environment}}</option>
+</select>
+	
+ </div>
+ </div>
+ 	<div class="form-group col-sm-12">
+		<label for="summary">Issue Summary</label>
+		<input type="text" ng-model="mc.createIssue.summary" class="form-control" />
+    </div>
+    <div class="box3">
+		<div class="form-group col-sm-12">
+			<label for="description">Issue Description</label>
+			<textarea class="form-control" rows="5" ng-model="mc.createIssue.description" class="form-control" ></textarea>
+		</div>
+	</div>
+   <div class="box4">
+ 		<div class="form-group col-sm-6">
+			<label for="dueDate">Due Date</label>
+			<input type="date" ng-model="mc.createIssue.dueDate" class="form-control" />
+		</div>
+		 <div class="form-group col-sm-6">
+			<label for="issueTeamMember">IssueOwner</label>
+			<select class="dropDown form-control" ng-model="mc.createIssue.owner.memberId" class="form-control">
+				<option value="{{owner.memberId}}" ng-repeat="owner in assigneeList" value="{{owner.memberId}}">{{owner.name}}</option>
+			</select>
+  	  </div>
+   </div> 
+  <div class="box5">
+		<div class="form-group col-sm-10">
+		<label for="environment">Original Estimate</label> 
+		<input type="text" ng-model="mc.createIssue.originalEstimate" class="form-control" placeholder="(in form of HH:mm:ss)"/>
+		</div>
+  </div>
+ 
+ <div class="form-group col-sm-2">
+  	  	<label>Attachments</label>
+		<button type="button" class="form-control btn btn-info" title="Include attachments" data-toggle="modal" data-target="#myModal">Attachments</button>
+</div>
+<!-- Modal -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+				
+					<div class="modal-header modalHeader">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title modalTitle"><strong>Attachments</strong></h4>
+					</div>
+					
+					<div class="modal-body">
+
+						<!-- first form -->
+						
+						<div id="one">
+						
+							<form class="form-horizontal" role="form" enctype="multipart/form-data">
+
+								<div class="form-group">
+
+
+									<div class="col-sm-10">
+										<input type="file" id="selectFile1" name="file[]" data-max-size="1048576" ng-files="getTheFile1($files)" />
+									</div><br><br>
+									
+									<div>
+										<textarea class="form-control" rows="3" id="textarea1" maxlength="100" placeholder="Enter a short detail" ng-model="attachmentLabel1"></textarea>
+										<div id="textarea_character_limit1"></div>
+									</div>
+
+									<div class="col-sm-offset-2 col-sm-10 attach1">
+										<strong><input type="submit" value="Attach" data-dismiss="modal" class="btn btn-info" ng-click="uploadFile1()"/></strong>
+									</div>
+								</div>
+
+								<!-- <div class="col-sm-offset-2 col-sm-10" id="chooseFile1">
+									<a href="#">Choose more files</a>
+								</div> -->
+
+							</form>
+						</div><br>
+						
+						<!-- second form -->
+
+						<div id="two" hidden>
+						
+							<form class="form-horizontal" role="form" enctype="multipart/form-data">
+							
+								<div class="form-group">
+
+									<label class="control-label col-sm-2">File 2:</label>
+
+									<div class="col-sm-10">
+										<input type="file" id="selectFile2" name="file[]" data-max-size="1048576" ng-files="getTheFile2($files)" />
+									</div><br><br>
+
+									<div>
+										<textarea class="form-control" rows="3" id="textarea2" maxlength="100" ng-model="attachmentLabel2" placeholder="Enter a short detail"></textarea>
+										<div id="textarea_character_limit2"></div>
+									</div>
+
+									<div class="col-sm-offset-2 col-sm-10 attach2">
+										<input type="submit" value="Attach" class="btn btn-info" ng-click="uploadFile2()"/>
+									</div>
+										
+								</div>
+
+								<div class="col-sm-offset-2 col-sm-10" id="chooseFile2">
+									<a href="#">Choose more files</a>
+								</div>
+
+							</form>
+						</div><br>
+
+						<!-- third form -->
+
+						<div id="three" hidden>
+						
+							<form class="form-horizontal" role="form" enctype="multipart/form-data">
+
+								<div class="form-group">
+
+									<label class="control-label col-sm-2">File 3:</label>
+									
+									<div class="col-sm-10">
+										<input type="file" id="selectFile3" name="file[]" data-max-size="1048576" ng-files="getTheFile3($files)" />
+									</div><br><br>
+								
+									<div>
+										<textarea class="form-control" rows="3" id="textarea3"  maxlength="100" ng-model="attachmentLabel3" placeholder="Enter a short detail"></textarea>
+										<div id="textarea_character_limit3"></div>
+									</div>
+									
+									<div class="col-sm-offset-2 col-sm-10 attach3">
+										<input type="submit" value="Attach" class="btn btn-info" ng-click="uploadFile3()"/>
+									</div> 
+
+								</div>
+								
+							</form>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+  	
+  	 <div id="view" hidden> 
+		<div ng-repeat="attachment in attachments">
+			<a href="#" >{{ attachment.attachmentFile }}</a>
+		</div>
+	</div> 
+ <div class="form-group submitButton">        
+      <div class="col-sm-offset-5 col-sm-2">
+       <button type="submit" class="form-control btn btn-info">Save</button>
+      </div>
+      </div>
+</form>
+</div>

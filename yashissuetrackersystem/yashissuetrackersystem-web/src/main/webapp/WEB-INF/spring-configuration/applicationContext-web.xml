@@ -21,7 +21,10 @@
 	<!-- <bean id="customerContainerSessionBean"
 		class="com.deere.dsfj.jdorderweb.session.CustomerContainerSession" scope="session">
 		<aop:scoped-proxy />
+	
 	</bean> -->
+
+
 
 
 </beans>

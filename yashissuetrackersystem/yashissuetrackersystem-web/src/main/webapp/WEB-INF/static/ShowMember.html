@@ -1,0 +1,34 @@
+<div ng-init="showMemberList()">
+
+<h2 class="headerlabel">Show Members</h2>
+
+<div id="exportable">
+			<table datatable="ng" class="table table-striped table-bordered table-hover">
+				<thead class="thead-inverse">
+				<tr id="heading">		
+					<th>MEMBER ID</th>		
+					<th>MEMBER NAME</th>
+					<th>MEMBER EMAIL</th>
+					<th>MEMBER CONTACT</th>
+					<th>ACTIVE STATUS</th>	
+					<th>ACTION</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr id="defaultTable" ng-repeat="member in members1">			
+					<td>{{member.memberId}}</td>
+					<td>{{member.name}}</td>
+					<td>{{member.email}}</td>
+					<td>{{member.contact}}</td>
+					<td><button ng-click="memberActivate(member.memberId)" class="btn btn-default">{{member.isActive}}</button></td>
+
+		
+					<td><input type="button" value="Delete" ng-click="memberDelete(member.memberId)" class="btn btn-default"></td>
+				  
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	<br/>
+	<button ng-click="exportData()" class="btn btn-primary">Export Data to Excel</button>
+</div>
